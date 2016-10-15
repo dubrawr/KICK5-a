@@ -24,7 +24,7 @@
 				<div class="modal-body">
 					<p>
 						<!-- new hangout form-->
-						<form id="newHangoutForm" ng-submit="create()">
+						<form id="newHangoutForm" ng-submit="createHangout()">
 							Hangout Name<br>
 							<input id="hangoutName" type="text" value="" ng-model="hangoutForm.name" required>
 							<br>
@@ -32,7 +32,7 @@
 							<input id="Date" type="text" value="" ng-model="hangoutForm.date" required>
 							<br>
 							Invites<br>
-							<input id="invitedUsers" type="text" value="" ng-model="hangoutForm.invites" required>
+							<input id="invitedUsers" type="text" value="" ng-model="hangoutForm.invited" required>
 							<br>
 							<br>
 							<input type="submit" value="New Calendar">

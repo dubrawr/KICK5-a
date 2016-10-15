@@ -9,13 +9,9 @@ var Hangout = new Schema({
         required: true,
         unique: true
     },
-    start: {
+    date: {
         type: String,
         required: true,
-    },
-    end: {
-        type: String,
-        required: true
     },
     invited: [{
         type: String,

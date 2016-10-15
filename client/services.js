@@ -11,7 +11,8 @@ angular.module('myApp').factory('AuthService',
       getUserStatus: getUserStatus,
       login: login,
       logout: logout,
-      register: register
+      register: register,
+      createHangout: createHangout
     });
 
     function isLoggedIn() {
@@ -115,5 +116,32 @@ angular.module('myApp').factory('AuthService',
       return deferred.promise;
 
     }
+
+    // creates a hangout
+    function createHangout(hangout, date, invited){
+      var deferred = $q.defer();
+
+      var data = {
+      hangout: hangout,
+      date: date,
+      invited: invited
+      };
+      $http({
+      url: '/user/hangouts',
+      method: 'POST',
+      data: data,
+      })
+      .success(function(data, status){
+        if(status === 200 && data.status){
+          deferred.resolve();
+        } else {
+          deferred.reject();
+        }
+      })
+      .error(function(data){
+        deferred.reject();
+      });
+      console.log(data);
+      }
 
 }]);
