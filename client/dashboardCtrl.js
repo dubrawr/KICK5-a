@@ -11,9 +11,10 @@ angular.module('myApp').controller('dashboardController', ['$scope', 'AuthServic
 			url: '/user/hangouts',
 			method: 'GET'
 		}).then(function(response){
-			console.log(response);
-			for (var index = 0; index < response.data.length; index++)
-            $('ul').append("<div class='col-lg-4'><li class='btn btn-primary' id=" + response.data[index]._id + " role='button'>" + response.data[index].hangout+ "</li></div>");
+			$scope.results = response.data;
+			// console.log(response);
+			// for (var index = 0; index < response.data.length; index++)
+   //          $('ul').append("<div class='col-lg-4'><li class='btn btn-primary' id=" + response.data[index]._id + " role='button'>" + response.data[index].hangout+ "</li></div>");
 		});
 	};
 }]);
