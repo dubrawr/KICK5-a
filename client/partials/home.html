@@ -1,14 +1,14 @@
 <h1>Yo!</h1>
 
 
-<div class="container" ng-init="showHangouts()">
+<div ng-init="showHangouts()" class="container">
 	<h2>Welcome to your Dashboard</h2>
 
 	<!-- <ul id="hangoutsList" class="row" style="text-align: center;">
 
 	</ul> -->
 	<div ng-repeat="result in results">
-		<div>{{ result.hangout }}</div>
+		<div class="btn btn-info btn-sm" style="text-align: center;" id="{{ result._id }}">{{ result.hangout }}</div>
 	</div>
 
 	<!-- Trigger the modal with a button -->

@@ -1,4 +1,5 @@
-angular.module('myApp').controller('dashboardController', ['$scope', 'AuthService', '$http', function($scope, AuthService, $http){
+angular.module('myApp').controller('dashboardController',
+	['$scope', 'AuthService', '$http', function($scope, AuthService, $http){
 	$scope.createHangout = function(){
 		AuthService.createHangout(
 			$scope.hangoutForm.name,
@@ -12,9 +13,6 @@ angular.module('myApp').controller('dashboardController', ['$scope', 'AuthServic
 			method: 'GET'
 		}).then(function(response){
 			$scope.results = response.data;
-			// console.log(response);
-			// for (var index = 0; index < response.data.length; index++)
-   //          $('ul').append("<div class='col-lg-4'><li class='btn btn-primary' id=" + response.data[index]._id + " role='button'>" + response.data[index].hangout+ "</li></div>");
 		});
 	};
 }]);

@@ -142,6 +142,8 @@ angular.module('myApp').factory('AuthService',
         deferred.reject();
       });
       console.log(data);
+      return deferred.promise;
+
       }
 
 }]);

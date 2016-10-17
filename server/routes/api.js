@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 
 var User = require('../models/user.js');
-var Hangout = require('../models/hangout');
+var Hangout = require('../models/hangout.js');
 
 
 router.post('/register', function(req, res) {
@@ -96,9 +96,7 @@ router.post('/hangouts', function(request, response) {
             createdHangout.save(function(err) {
               if (err) {
                 console.log(err);
-                return response.status(500).json({
-                  message: 'Internal server error'
-                });
+                return response.status(500).json();
               }
               console.log(createdHangout + 'this is the created hangout');
               return response.status(201).json();

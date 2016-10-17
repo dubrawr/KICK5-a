@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost/mean-auth');
 
 // user schema/model
 var User = require('./models/user.js');
-var Hangout = require('./models/hangout');
+var Hangout = require('./models/hangout.js');
 
 // create instance of express
 var app = express();
@@ -65,7 +65,7 @@ app.use(function(err, req, res) {
   }));
 });
 
-
+module.exports = app;
 
 // app.get('/hangouts', function(request, response){
 //     Hangout.find({owner: request.user}, function(err, results){
@@ -89,4 +89,4 @@ app.use(function(err, req, res) {
 
 
 
-module.exports = app;
+
