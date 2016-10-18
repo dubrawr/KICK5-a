@@ -6,6 +6,7 @@ angular.module('myApp').controller('dashboardController',
 			$scope.hangoutForm.date,
 			$scope.hangoutForm.invited
 		);
+		$scope.showHangouts();
 	};
 	$scope.showHangouts = function(){
 		$http({

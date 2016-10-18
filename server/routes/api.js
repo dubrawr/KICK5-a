@@ -68,7 +68,7 @@ router.get('/status', function(req, res) {
 router.post('/hangouts', function(request, response) {
   console.log(request.body);
 
-  var owner = request.user.username;
+  var owner = request.user;
   console.log('this is the owner:' + owner);
   var hangoutName = request.body.hangout;
 
