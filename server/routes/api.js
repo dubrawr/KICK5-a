@@ -76,15 +76,17 @@ router.post('/hangouts', function(request, response) {
 
   var invited = request.body.invited;
 
-  var date = request.body.date;
+  var startDate = request.body.startDate.trim();
+  var endDate = request.body.endDate.trim();
 
-  date = date.trim();
+  
 
 
   var createdHangout = new Hangout({
     hangout: hangoutName,
     invited: invited,
-    date: date,
+    startDate: startDate,
+    endDate: endDate,
     owner: owner
   });
   console.log(request.user + 'this is the request.user');

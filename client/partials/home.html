@@ -8,7 +8,7 @@
 
 	</ul> -->
 	<div ng-repeat="result in results" style="display: inline-block;">
-		<div class="btn btn-info btn-sm" style="margin-right: 10px;" id="{{ result._id }}">{{ result.hangout }}</div>
+		<a class="btn btn-info btn-sm" style="margin-right: 10px;" id="{{ result._id }}" href="#/calendar/{{ result._id }}">{{ result.hangout }}</a>
 	</div>
 
 	<!-- Trigger the modal with a button -->
@@ -31,8 +31,11 @@
 							Hangout Name<br>
 							<input id="hangoutName" type="text" value="" ng-model="hangoutForm.name" required>
 							<br>
-							Date<br>
-							<input id="Date" type="text" value="" ng-model="hangoutForm.date" required>
+							startDate<br>
+							<input id="Date" type="date" value="" ng-model="hangoutForm.startDate" required>
+							<br>
+							endDate<br>
+							<input id="Date" type="date" value="" ng-model="hangoutForm.endDate" required>
 							<br>
 							Invites<br>
 							<input id="invitedUsers" type="text" value="" ng-model="hangoutForm.invited" required>

@@ -3,7 +3,8 @@ angular.module('myApp').controller('dashboardController',
 	$scope.createHangout = function(){
 		AuthService.createHangout(
 			$scope.hangoutForm.name,
-			$scope.hangoutForm.date,
+			$scope.hangoutForm.startDate,
+			$scope.hangoutForm.endDate,
 			$scope.hangoutForm.invited
 		);
 		$scope.showHangouts();
@@ -16,4 +17,5 @@ angular.module('myApp').controller('dashboardController',
 			$scope.results = response.data;
 		});
 	};
+	//show hangouts needs to also perform a GET that searches the invited list
 }]);

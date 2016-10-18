@@ -118,12 +118,13 @@ angular.module('myApp').factory('AuthService',
     }
 
     // creates a hangout
-    function createHangout(hangout, date, invited){
+    function createHangout(hangout, startDate, endDate, invited){
       var deferred = $q.defer();
 
       var data = {
       hangout: hangout,
-      date: date,
+      startDate: startDate,
+      endDate: endDate,
       invited: invited
       };
       $http({
@@ -143,7 +144,7 @@ angular.module('myApp').factory('AuthService',
       });
       console.log(data);
       return deferred.promise;
-
+      //after create hangout change route to /calendar
       }
 
 }]);

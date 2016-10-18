@@ -9,7 +9,11 @@ var Hangout = new Schema({
         required: true,
         unique: true
     },
-    date: {
+    startDate: {
+        type: String,
+        required: true,
+    },
+    endDate: {
         type: String,
         required: true,
     },

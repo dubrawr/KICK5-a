@@ -21,8 +21,9 @@ myApp.config(function ($routeProvider) {
       controller: 'registerController',
       access: {restricted: false}
     })
-    .when('/one', {
-      template: '<h1>This is page one!</h1>',
+    .when('/calendar/:id', {
+      templateUrl: 'partials/calendar.html',
+      controller: 'calendarController',
       access: {restricted: true}
     })
     .when('/two', {
@@ -46,3 +47,4 @@ myApp.run(function ($rootScope, $location, $route, AuthService) {
       });
   });
 });
+// the next is undefined when you visit localhost without the #
