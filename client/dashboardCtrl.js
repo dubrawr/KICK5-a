@@ -15,6 +15,8 @@ angular.module('myApp').controller('dashboardController',
 			method: 'GET'
 		}).then(function(response){
 			$scope.results = response.data;
+			console.log(response.data);
+		
 		});
 	};
 	//show hangouts needs to also perform a GET that searches the invited list

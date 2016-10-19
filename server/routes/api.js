@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var mongoose = require('mongoose');
 
 var User = require('../models/user.js');
 var Hangout = require('../models/hangout.js');
@@ -79,9 +80,6 @@ router.post('/hangouts', function(request, response) {
   var startDate = request.body.startDate.trim();
   var endDate = request.body.endDate.trim();
 
-  
-
-
   var createdHangout = new Hangout({
     hangout: hangoutName,
     invited: invited,
@@ -114,6 +112,14 @@ router.get('/hangouts', function(request, response){
         response.json(results);
     });
 
+});
+router.get('/hangouts/:id', function(request, response){
+  Hangout.find({_id: request.params.id}, function(err,results){
+    console.log(results);
+    response.json(results);
+
+
+  });
 });
 
 module.exports = router;
