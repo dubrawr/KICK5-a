@@ -140,8 +140,8 @@ router.post('/schedule', function(request, response){
   });
 });
 
-router.get('/schedule', function(request,response){
-  Schedule.find({user: request.user}, function(err,results){
+router.get('/schedule/:id', function(request,response){
+  Schedule.find({hangoutId: request.params.id}, function(err,results){
     console.log(results + ' these are the results for schedule GET');
     response.json(results);
 

@@ -5,12 +5,9 @@
 <div ng-repeat="day in days | date">
 	<div style="display: inline=block; background-color: #c0feff;">{{ day.moment | amDateFormat:'dddd, MMMM Do YYYY' }}</div>
 	<div style="display: inline-block;">
-		<!-- <button ng-click="available=true" class="btn btn-info btn-sm">
-			Toggle Availability
-		</button> -->
-<!-- 		<div ng-hide="available" style="background-color: red"></div> -->
-<label style="display: inline-block;"><input ng-model="day.availability" type="checkbox">Available?</label>
-	<div style="display: inline-block; margin-left: 10px;">USERNAME will be here if available</div>
+
+		<label style="display: inline-block;"><input ng-model="day.availability" type="checkbox">Available?</label>
+		<div style="display: inline-block; margin-left: 10px;">USERNAME will be here if available</div>
 	</div>
 
 </div>
