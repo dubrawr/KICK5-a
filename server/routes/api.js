@@ -123,13 +123,28 @@ router.get('/hangouts/:id', function(request, response){
   });
 
 router.post('/schedule', function(request, response){
-  console.log(request.user);
   var hangoutId = request.body.hangoutId;
   var availability = request.body.availability;
   var createdSchedule = new Schedule({
     hangoutId: hangoutId,
     user: request.user,
     availability: availability
+  });
+  createdSchedule.save(function(err){
+    if (err){
+      console.log(err);
+      return response.status(500).json();
+      }
+    console.log(createdSchedule + 'this is the created schedule');
+    return response.status(201).json();
+  });
+});
+
+router.get('/schedule', function(request,response){
+  Schedule.find({user: request.user}, function(err,results){
+    console.log(results + ' these are the results for schedule GET');
+    response.json(results);
+
   });
 });
 

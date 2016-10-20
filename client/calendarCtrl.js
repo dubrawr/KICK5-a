@@ -29,6 +29,13 @@ function($routeParams, $scope, $http, moment){
 				console.log($scope.days);
 				//forEach if scope.days.availability = true, push into a separate array
 
+		}).then(function(){
+			$http({
+				url: '/user/schedule',
+				method:'GET'
+			}).then(function(response){
+				console.log(response.data);
+			});
 		});
 	};
 	$scope.save = function(){
