@@ -5,6 +5,7 @@
     "mongodb": "mongod --dbpath=mongo_data/ --nojournal"
   },
   "dependencies": {
+    "angular-moment": "^1.0.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
