@@ -3,8 +3,8 @@
 
 <!-- <div ng-repeat="{{date in dates}}">{{ date }}</div>
 </div> -->
-<div>
-	<div style="display: inline=block;">Date: {{data.startDate | date}}</div>
+<div ng-repeat="day in days | date">
+	<div style="display: inline=block; background-color: #c0feff;">{{ day | amDateFormat:'dddd, MMMM Do YYYY' }}</div>
 	<div style="display: inline-block;">This should be editable</div>
 
 </div>
