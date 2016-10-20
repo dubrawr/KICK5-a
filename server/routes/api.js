@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 
 var User = require('../models/user.js');
 var Hangout = require('../models/hangout.js');
+var Schedule = require('../models/schedule.js');
 
 
 router.post('/register', function(req, res) {
@@ -120,6 +121,18 @@ router.get('/hangouts/:id', function(request, response){
 
 
   });
+
+router.post('/schedule', function(request, response){
+  console.log(request.user);
+  var hangoutId = request.body.hangoutId;
+  var availability = request.body.availability;
+  var createdSchedule = new Schedule({
+    hangoutId: hangoutId,
+    user: request.user,
+    availability: availability
+  });
+});
+
 });
 
 module.exports = router;

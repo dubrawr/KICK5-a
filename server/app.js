@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost/mean-auth');
 // user schema/model
 var User = require('./models/user.js');
 var Hangout = require('./models/hangout.js');
+var Schedule = require('./models/schedule.js');
 
 // create instance of express
 var app = express();

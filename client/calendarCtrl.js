@@ -12,23 +12,50 @@ function($routeParams, $scope, $http, moment){
 			params: request
 			}).then(function(response){
 				$scope.data = response.data[0];
+
 				var startDate = moment(response.data[0].startDate);
 				var endDate = moment(response.data[0].endDate);
 				$scope.dateRange = endDate.diff(startDate, 'days');
-				$scope.days = [];
 				console.log($scope.dateRange);
-				for (i=0; i<= $scope.dateRange; i++){
+
+				$scope.days = [];
+					for (i=0; i<= $scope.dateRange; i++){
 					var addDay = moment(response.data[0].startDate).add(i, 'days');
-					$scope.days.push(addDay);
-					
+					$scope.days.push({
+						moment: addDay,
+						availability: false
+					});
 				}
 				console.log($scope.days);
-
+				//forEach if scope.days.availability = true, push into a separate array
 
 		});
 	};
+	$scope.save = function(){
+		console.log('I am working');
+		var data = {
+			hangoutId: $routeParams.id,
+			availability: $scope.days.filter(
+				function(day){
+					return day.availability;
+				}).map(function(day){
 
+				return day.moment.format();
+			})
+		};
+		$http({
+			url: '/user/schedule/',
+			method: 'POST',
+			data: data
+		});
+	};
+//on click of availability button, toggles date true or false, if true it means available,
+//and i push that specific date in to the array
+//on click of save button, save this entire object with this list of dates.
 
-	// i need to make a get request based on the routeparams to pull
-//	the info from the correct hangout.
+//use ng model
 }]);
+
+// need to add the user in the backend, save the schedule correctly
+// and let the client user know that the save worked
+//create a get endpoint to display a user's availability
