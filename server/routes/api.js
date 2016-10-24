@@ -71,24 +71,25 @@ router.post('/hangouts', function(request, response) {
   console.log(request.body);
 
   var owner = request.user;
-  console.log('this is the owner:' + owner);
-  var hangoutName = request.body.hangout;
+  // console.log('this is the owner:' + owner);
 
-  hangoutName = hangoutName.trim();
+  hangoutName = request.body.hangout.trim();
 
-  var invited = request.body.invited;
+  var invited = request.body.invited.trim();
+  // console.log(invited);
 
   var startDate = request.body.startDate.trim();
   var endDate = request.body.endDate.trim();
 
   var createdHangout = new Hangout({
     hangout: hangoutName,
-    invited: invited,
+    invited: invited.split(' '),
     startDate: startDate,
     endDate: endDate,
     owner: owner
   });
-  console.log(request.user + 'this is the request.user');
+  console.log(createdHangout);
+  // console.log(request.user + 'this is the request.user');
   Hangout.find({hangout: hangoutName}, function(err, results){
     if (results.length !== 0){
       return response.status(409).json({message: 'hangout already exists'});
@@ -99,50 +100,82 @@ router.post('/hangouts', function(request, response) {
                 console.log(err);
                 return response.status(500).json();
               }
-              console.log(createdHangout + 'this is the created hangout');
+              // console.log(createdHangout + 'this is the created hangout');
               return response.status(201).json();
             });
           }
 
         });
 });
-
+// i need to have this GET search the invited arrays as well for request.user
 router.get('/hangouts', function(request, response){
     Hangout.find({owner: request.user}, function(err, results){
-        console.log(results);
+        
         response.json(results);
     });
 
 });
 router.get('/hangouts/:id', function(request, response){
   Hangout.find({_id: request.params.id}, function(err,results){
-    console.log(results);
+    // console.log(results);
     response.json(results);
 
 
   });
 
-router.post('/schedule', function(request, response){
-  var hangoutId = request.body.hangoutId;
-  var availability = request.body.availability;
-  var createdSchedule = new Schedule({
-    hangoutId: hangoutId,
-    user: request.user,
-    availability: availability
-  });
-  createdSchedule.save(function(err){
-    if (err){
-      console.log(err);
-      return response.status(500).json();
+  router.post('/schedule/:id', function(request, response){
+    var hangoutId = request.params.id;
+    var availability = request.body.availability;
+    var createdSchedule = new Schedule({
+      hangoutId: hangoutId,
+      user: request.user,
+      availability: availability
+    }); 
+    console.log({hangoutId: hangoutId, user: request.user});
+    Schedule.findOne({hangoutId: hangoutId, user: request.user}, function(err, result){
+      // console.log(result + ' these are the RESULTS');
+      // console.log(result._id);
+      // console.log(availability);
+      if (result) {
+        result.availability = availability;
+        result.save(function(err){
+          if (err){
+            return response.status(400).send(err);
+          }
+            return response.status(200).json();
+        });
+        // result.update( { _id: result.id }, {$set: {availability: availability}});
+        console.log(result);
+       
+
+        // result.availabillity = request.body.availability;
+        // result.markModified('availability');
+        // result.save(function(err){
+        //   if (err){
+        //     console.log(err);
+        //     return response.status(500).json(err);
+        //   }
+        //   return response.status(201).json(result);
+        // });
+        // it breaks here. not sure how to update
+
+      } else {
+        createdSchedule.save(function(err){
+          if (err){
+            console.log(err);
+            return response.status(500).json();
+          }
+          console.log(createdSchedule + 'this is the created schedule');
+          return response.status(201).json();
+        });
       }
-    console.log(createdSchedule + 'this is the created schedule');
-    return response.status(201).json();
+    });
+
   });
-});
 
 router.get('/schedule/:id', function(request,response){
-  Schedule.find({hangoutId: request.params.id}, function(err,results){
-    console.log(results + ' these are the results for schedule GET');
+  Schedule.findOne({hangoutId: request.params.id}, function(err,results){
+    // console.log(results + ' these are the results for schedule GET');
     response.json(results);
 
   });

@@ -14,7 +14,7 @@ var Schedule = new Schema({
 		ref: 'User'
 	},
 	availability: [{
-		type: Date,
+		type: Date,	
 		required: true
 	}]
 });
