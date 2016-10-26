@@ -1,8 +1,7 @@
 angular.module('myApp').controller('calendarController', ['$routeParams', '$scope', '$http', 'moment', 
 function($routeParams, $scope, $http, moment){
-	console.log($routeParams);
+	// console.log($routeParams);
 	$scope.grabInfo = function(){
-		console.log('hello');
 		var request = {
 			id: $routeParams.id
 		};
@@ -17,7 +16,7 @@ function($routeParams, $scope, $http, moment){
 				var startDate = moment(response.data[0].startDate);
 				var endDate = moment(response.data[0].endDate);
 				$scope.dateRange = endDate.diff(startDate, 'days');
-				console.log($scope.dateRange);
+				// console.log($scope.dateRange);
 
 				$scope.days = [];
 					for (i=0; i<= $scope.dateRange; i++){
@@ -27,9 +26,8 @@ function($routeParams, $scope, $http, moment){
 						availability: false
 					});
 				}
-				console.log($scope.days);
-				//forEach if scope.days.availability = true, push into a separate array
-
+				// console.log($scope.days);
+				
 		}).then(function(){
 			var request = {id: $routeParams.id};
 			$http({
@@ -38,12 +36,12 @@ function($routeParams, $scope, $http, moment){
 				params: request
 			}).then(function(response){
 				console.log(response.data);
-				var availability = response.data.availability.map(function(date){
+				var availability = response.data[0].availability.map(function(date){
 					return date.slice(0, 10);
 				});
 				
 				$scope.days.forEach(function(day, index){
-					console.log(day.moment.format());
+					// console.log(day.moment.format());
 					if (availability.indexOf(day.moment.format().slice(0, 10)) !== -1){
 						$scope.days[index].availability = true;
 					}
@@ -57,7 +55,6 @@ function($routeParams, $scope, $http, moment){
 		});
 	};
 	$scope.save = function(){
-		console.log('I am working');
 		var data = {
 			hangoutId: $routeParams.id,
 			availability: $scope.days.filter(

@@ -58,13 +58,14 @@ app.use(function(err, req, res, next) {
   next(err);
 });
 
-app.use(function(err, req, res) {
-  res.status(err.status || 500);
-  res.end(JSON.stringify({
-    message: err.message,
-    error: {}
-  }));
-});
+// app.use(function(err, req, res) {
+//   //this is causing an error not sure why
+//   res.status(err.status || 500);
+//   res.end(JSON.stringify({
+//     message: err.message,
+//     error: {}
+//   }));
+// });
 
 module.exports = app;
 

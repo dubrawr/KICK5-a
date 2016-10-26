@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var mongoose = require('mongoose');
+var q = require('q');
 
 var User = require('../models/user.js');
 var Hangout = require('../models/hangout.js');
@@ -109,12 +110,20 @@ router.post('/hangouts', function(request, response) {
 });
 // i need to have this GET search the invited arrays as well for request.user
 router.get('/hangouts', function(request, response){
-    Hangout.find({owner: request.user}, function(err, results){
-        
-        response.json(results);
+
+  // console.log(request.user);
+  q.all([
+    Hangout.find({owner: request.user}).exec(),
+    Hangout.find({invited: request.user.username}).exec()
+    ]).then(function(results){
+      var owned = results[0];
+      var invited = results[1];
+      //concat joins two arrays
+      response.json(owned.concat(invited));
     });
 
 });
+
 router.get('/hangouts/:id', function(request, response){
   Hangout.find({_id: request.params.id}, function(err,results){
     // console.log(results);
@@ -130,34 +139,24 @@ router.get('/hangouts/:id', function(request, response){
       hangoutId: hangoutId,
       user: request.user,
       availability: availability
-    }); 
+    });
+    console.log('this is the hangoutID and request.user below');
+    console.log(request.user);
     console.log({hangoutId: hangoutId, user: request.user});
     Schedule.findOne({hangoutId: hangoutId, user: request.user}, function(err, result){
-      // console.log(result + ' these are the RESULTS');
-      // console.log(result._id);
-      // console.log(availability);
+
       if (result) {
         result.availability = availability;
+        //the guy recommended always find the specific object and use.save
         result.save(function(err){
           if (err){
             return response.status(400).send(err);
           }
             return response.status(200).json();
         });
-        // result.update( { _id: result.id }, {$set: {availability: availability}});
-        console.log(result);
-       
 
-        // result.availabillity = request.body.availability;
-        // result.markModified('availability');
-        // result.save(function(err){
-        //   if (err){
-        //     console.log(err);
-        //     return response.status(500).json(err);
-        //   }
-        //   return response.status(201).json(result);
-        // });
-        // it breaks here. not sure how to update
+        console.log(result);
+
 
       } else {
         createdSchedule.save(function(err){
@@ -174,7 +173,8 @@ router.get('/hangouts/:id', function(request, response){
   });
 
 router.get('/schedule/:id', function(request,response){
-  Schedule.findOne({hangoutId: request.params.id}, function(err,results){
+  Schedule.find({hangoutId: request.params.id}, function(err,results){
+    console.log('SCHEDULE GET RESULTS: '+ results);
     // console.log(results + ' these are the results for schedule GET');
     response.json(results);
 
