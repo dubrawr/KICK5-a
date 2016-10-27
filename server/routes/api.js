@@ -113,12 +113,14 @@ router.get('/hangouts', function(request, response){
 
   // console.log(request.user);
   q.all([
-    Hangout.find({owner: request.user}).exec(),
+    Hangout.find({owner: request.user}).populate('owner').exec(),
     Hangout.find({invited: request.user.username}).exec()
     ]).then(function(results){
       var owned = results[0];
       var invited = results[1];
       //concat joins two arrays
+      console.log('this is the concat');
+      console.log(owned.concat(invited));
       response.json(owned.concat(invited));
     });
 
@@ -138,7 +140,8 @@ router.get('/hangouts/:id', function(request, response){
     var createdSchedule = new Schedule({
       hangoutId: hangoutId,
       user: request.user,
-      availability: availability
+      availability: availability,
+      username: request.user.username
     });
     console.log('this is the hangoutID and request.user below');
     console.log(request.user);
@@ -173,7 +176,7 @@ router.get('/hangouts/:id', function(request, response){
   });
 
 router.get('/schedule/:id', function(request,response){
-  Schedule.find({hangoutId: request.params.id}, function(err,results){
+  Schedule.findOne({hangoutId: request.params.id, user: request.user}, function(err,results){
     console.log('SCHEDULE GET RESULTS: '+ results);
     // console.log(results + ' these are the results for schedule GET');
     response.json(results);

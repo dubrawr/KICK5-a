@@ -26,4 +26,4 @@ var Hangout = new Schema({
         ref: 'User'}
 });
 
-module.exports = mongoose.model('hangouts', Hangout);
+module.exports = mongoose.model('Hangouts', Hangout);

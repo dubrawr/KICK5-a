@@ -22,7 +22,8 @@ var Schedule = require('./models/schedule.js');
 var app = express();
 
 // require routes
-var routes = require('./routes/api.js');
+var userRoutes = require('./routes/api.js');
+var scheduleRoutes = require('./routes/scheduleApi.js');
 
 // define middleware
 app.use(express.static(path.join(__dirname, '../client')));
@@ -45,7 +46,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // routes
-app.use('/user/', routes);
+app.use('/user/', userRoutes);
+app.use('/schedule/', scheduleRoutes);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../client', 'index.html'));

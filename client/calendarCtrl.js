@@ -10,8 +10,8 @@ function($routeParams, $scope, $http, moment){
 			method: 'GET',
 			params: request
 			}).then(function(response){
-				console.log(response.data);
-				$scope.data = response.data[0];
+				// console.log(response.data);
+				
 
 				var startDate = moment(response.data[0].startDate);
 				var endDate = moment(response.data[0].endDate);
@@ -23,7 +23,8 @@ function($routeParams, $scope, $http, moment){
 					var addDay = moment(response.data[0].startDate).add(i, 'days');
 					$scope.days.push({
 						moment: addDay,
-						availability: false
+						availability: false,
+						availableUsers: []
 					});
 				}
 				// console.log($scope.days);
@@ -35,8 +36,9 @@ function($routeParams, $scope, $http, moment){
 				method:'GET',
 				params: request
 			}).then(function(response){
-				console.log(response.data);
-				var availability = response.data[0].availability.map(function(date){
+				// console.log(response.data);
+				
+				var availability = response.data.availability.map(function(date){
 					return date.slice(0, 10);
 				});
 				
@@ -46,12 +48,25 @@ function($routeParams, $scope, $http, moment){
 						$scope.days[index].availability = true;
 					}
 				});
-				
-				
-				// $scope.scheduleData = response.data[0]._id;
-				// console.log(response.data[0]._id);
 
 			});
+			$http({
+				url: '/schedule/' + $routeParams.id,
+				method: 'GET'
+			}).then(function(response){
+				response.data.forEach(function(schedule){
+					var availability = schedule.availability.map(function(date){
+					return date.slice(0, 10);
+					});
+					$scope.days.forEach(function(day, index){
+					if (availability.indexOf(day.moment.format().slice(0, 10)) !== -1){
+						$scope.days[index].availableUsers.push(schedule.username);
+					}
+				});
+				});
+				console.log($scope.days);
+			});
+
 		});
 	};
 	$scope.save = function(){

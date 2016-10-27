@@ -13,10 +13,14 @@ var Schedule = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	username: {
+		type: String,
+		required: true
+	},
 	availability: [{
 		type: Date,	
 		required: true
 	}]
 });
 
-module.exports = mongoose.model('schedule', Schedule);
+module.exports = mongoose.model('Schedule', Schedule);
