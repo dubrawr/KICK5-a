@@ -1,5 +1,5 @@
-angular.module('myApp').controller('calendarController', ['$routeParams', '$scope', '$http', 'moment', 
-function($routeParams, $scope, $http, moment){
+angular.module('myApp').controller('calendarController', ['$routeParams', '$scope', '$http', 'moment', '$location',
+function($routeParams, $scope, $http, moment, $location){
 	// console.log($routeParams);
 	$scope.grabInfo = function(){
 		var request = {
@@ -93,7 +93,19 @@ function($routeParams, $scope, $http, moment){
 		
 	};
 
-	
+	$scope.delete = function(){
+		var x = confirm("Are you sure you want to delete?");
+		if (x){
+			$http({
+				url: '/user/hangouts/' + $routeParams.id,
+				method: 'DELETE',
+			}).then(function(){
+				$location.path('/');
+			});
+		} else {
+			return false;
+		}
+	};
 	
 }]);
 

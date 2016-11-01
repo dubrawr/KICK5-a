@@ -130,9 +130,20 @@ router.get('/hangouts/:id', function(request, response){
   Hangout.find({_id: request.params.id}, function(err,results){
     // console.log(results);
     response.json(results);
-
-
   });
+});
+
+router.delete('/hangouts/:id', function(request, response){
+  console.log(request.user);
+  Hangout.remove({_id: request.params.id, owner: request.user}, function(err, result){
+    if (err){
+      console.log('error deleting');
+      return response.status(204).json();
+  } else {
+    console.log('delete success');
+      return response.status(200).json();
+  }
+});
 
   router.post('/schedule/:id', function(request, response){
     var hangoutId = request.params.id;
