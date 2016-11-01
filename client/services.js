@@ -5,6 +5,7 @@ angular.module('myApp').factory('AuthService',
     // create user variable
     var user = null;
 
+
     // return available functions for use in the controllers
     return ({
       isLoggedIn: isLoggedIn,
@@ -12,8 +13,15 @@ angular.module('myApp').factory('AuthService',
       login: login,
       logout: logout,
       register: register,
-      createHangout: createHangout
+      createHangout: createHangout,
+      username: username
     });
+
+    function username(){
+      if (isLoggedIn){
+        return user;
+      }
+    }
 
     function isLoggedIn() {
       if(user) {
@@ -28,7 +36,8 @@ angular.module('myApp').factory('AuthService',
       // handle success
       .success(function (data) {
         if(data.status){
-          user = true;
+          user = data.username;
+
         } else {
           user = false;
         }
@@ -50,7 +59,8 @@ angular.module('myApp').factory('AuthService',
         // handle success
         .success(function (data, status) {
           if(status === 200 && data.status){
-            user = true;
+            console.log(data);
+            user = data.username;
             deferred.resolve();
           } else {
             user = false;

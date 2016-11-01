@@ -1,6 +1,7 @@
-angular.module('myApp').controller('calendarController', ['$routeParams', '$scope', '$http', 'moment', '$location',
-function($routeParams, $scope, $http, moment, $location){
+angular.module('myApp').controller('calendarController', ['$routeParams', '$scope', '$http', 'moment', '$location', 'AuthService',
+function($routeParams, $scope, $http, moment, $location, AuthService){
 	// console.log($routeParams);
+	$scope.owner = false;
 	$scope.grabInfo = function(){
 		var request = {
 			id: $routeParams.id
@@ -11,6 +12,9 @@ function($routeParams, $scope, $http, moment, $location){
 			params: request
 			}).then(function(response){
 				console.log(response.data);
+				if (response.data[0].owner.username == AuthService.username()){
+					$scope.owner = true;
+				}
 				$scope.hangoutTitle = response.data[0].hangout;
 
 				var startDate = moment(response.data[0].startDate);

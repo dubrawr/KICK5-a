@@ -1,7 +1,7 @@
 <div class="left">
 
 <h1 class="gray inlineBlock" ng-init="grabInfo()">{{ hangoutTitle | uppercase }}</h1>
-<div class="floatRight" id="deleteButton" ng-click="delete()"></div>
+<div class="floatRight" id="deleteButton" ng-if="owner" ng-click="delete()"></div>
 
 <div ng-repeat="day in days">
 	<div class="scheduleDates">{{ day.moment | amDateFormat:'dddd, MMMM Do YYYY' }}</div>

@@ -43,7 +43,8 @@ router.post('/login', function(req, res, next) {
         });
       }
       res.status(200).json({
-        status: 'Login successful!'
+        status: 'Login successful!',
+        username: user.username
       });
     });
   })(req, res, next);
@@ -63,7 +64,8 @@ router.get('/status', function(req, res) {
     });
   }
   res.status(200).json({
-    status: true
+    status: true,
+    username: req.user.username
   });
 });
 
@@ -119,7 +121,7 @@ router.get('/hangouts', function(request, response){
       var owned = results[0];
       var invited = results[1];
       //concat joins two arrays
-      console.log('this is the concat');
+      // console.log('this is the concat');
       console.log(owned.concat(invited));
       response.json(owned.concat(invited));
     });
@@ -127,7 +129,7 @@ router.get('/hangouts', function(request, response){
 });
 
 router.get('/hangouts/:id', function(request, response){
-  Hangout.find({_id: request.params.id}, function(err,results){
+  Hangout.find({_id: request.params.id}).populate('owner').exec(function(err,results){
     // console.log(results);
     response.json(results);
   });
@@ -135,10 +137,10 @@ router.get('/hangouts/:id', function(request, response){
 
 router.delete('/hangouts/:id', function(request, response){
   console.log(request.user);
-  Hangout.remove({_id: request.params.id, owner: request.user}, function(err, result){
-    if (err){
+  Hangout.findOneAndRemove({_id: request.params.id, owner: request.user}, function(err, result){
+    if (err || !result){
       console.log('error deleting');
-      return response.status(204).json();
+      return response.status(500).json();
   } else {
     console.log('delete success');
       return response.status(200).json();
