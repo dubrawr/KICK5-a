@@ -1,16 +1,26 @@
-<h1 ng-init="grabInfo()">Hello World</h1>
+<div class="left">
 
+<h1 class="gray inlineBlock" ng-init="grabInfo()">{{ hangoutTitle | uppercase }}</h1>
+<div class="floatRight" id="deleteButton" ng-click="delete()"></div>
 
+<div ng-repeat="day in days">
+	<div class="scheduleDates">{{ day.moment | amDateFormat:'dddd, MMMM Do YYYY' }}</div>
+	
+	<div class="inlineBlock availability">
+	
+		<label class="oswald inlineBlock"><input ng-model="day.availability" type="checkbox">Available?</label>
+		<div class="inlineBlock availableUsers purple">{{day.availableUsers[0] | uppercase}}</div>
+		<div class="inlineBlock availableUsers purple">{{day.availableUsers[1] | uppercase}}</div>
+		<div class="inlineBlock availableUsers purple">{{day.availableUsers[2] | uppercase}}</div>
+		<div class="inlineBlock availableUsers purple">{{day.availableUsers[3] | uppercase}}</div>
+		<div class="inlineBlock availableUsers purple">{{day.availableUsers[4] | uppercase}}</div>
 
-<div ng-repeat="day in days | date">
-	<div style="display: inline=block; background-color: #c0feff;">{{ day.moment | amDateFormat:'dddd, MMMM Do YYYY' }}</div>
-	<div style="display: inline-block;">
-
-		<label style="display: inline-block;"><input ng-model="day.availability" type="checkbox">Available?</label>
-		<div style="display: inline-block; margin-left: 10px;">{{day.availableUsers}}</div>
 	</div>
-
+</div>
+<button class="btn pinkButton marginTop inlineBlock" ng-click="save()">Save</button>
+<button class="btn pinkButton marginTop inlineBlock" ng-click="edit()">Edit Hangout</button>
+<a class="btn btn-default floatRight marginTop" href="#/">Back to Dashboard</a>
 </div>
 
 
-<button ng-click="save()">Save</button>
+

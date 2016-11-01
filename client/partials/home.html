@@ -1,62 +1,60 @@
 
 
 
-<div ng-init="showHangouts()" class="container">
+<div ng-init="showHangouts()" class="left container">
 	<h3>Welcome to your</h3>
-	<h1 class="welcome">DASHBOARD</h1>
+	<h1 class="welcome gray">DASHBOARD</h1>
 
-	<!-- <ul id="hangoutsList" class="row" style="text-align: center;">
 
-	</ul> -->
-	<div ng-repeat="result in results" style="display: inline-block;">
-		<a class="btn btn-info btn-sm" style="margin-right: 10px;" id="{{ result._id }}" href="#/calendar/{{ result._id }}">{{ result.hangout }}</a>
-	</div>
+<div class="inlineBlock" ng-repeat="result in results">
+	<a class="purpleBG hangout btn btn-md oswald" id="{{ result._id }}" href="#/calendar/{{ result._id }}"><span class="verticallyAlign">{{ result.hangout | uppercase}}</span></a>
+</div>
 
-	<!-- Trigger the modal with a button -->
-	<button style="display: block; margin-top: 20px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">START NEW</button>
+<!-- Trigger the modal with a button -->
+<button type="button" style="display: block; margin-top: 50px" class="createhangout btn oswald" data-toggle="modal" data-target="#myModal">CREATE NEW HANGOUT</button>
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog">
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
 
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Create new note.</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-						<!-- new hangout form-->
-						<form id="newHangoutForm" ng-submit="createHangout()">
-							Hangout Name<br>
-							<input id="hangoutName" type="text" value="" ng-model="hangoutForm.name" required>
-							<br>
-							startDate<br>
-							<input id="Date" type="date" value="" ng-model="hangoutForm.startDate" required>
-							<br>
-							endDate<br>
-							<input id="Date" type="date" value="" ng-model="hangoutForm.endDate" required>
-							<br>
-							Invites<br>
-							<input id="invitedUsers" type="text" value="" ng-model="hangoutForm.invited" required>
-							<br>
-							<br>
-							<input type="submit" value="New Calendar">
-						</form>
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="newHangout" class="btn btn-default" data-dismiss="modal">I'm not ready, take me to my dashboard.</button>
-				</div>
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Create a new Hangout.</h4>
 			</div>
-
+			<div class="modal-body">
+				<p>
+					<!-- new hangout form-->
+					<form id="newHangoutForm" ng-submit="createHangout()">
+						Hangout Name<br>
+						<input id="hangoutName" size="35" type="text" value="" ng-model="hangoutForm.name" placeholder="Choose a cool Hangout name."required>
+						<br>
+						Start Date<br>
+						<input id="Date" type="date" value="" ng-model="hangoutForm.startDate" required>
+						<br>
+						End Date<br>
+						<input id="Date" type="date" value="" ng-model="hangoutForm.endDate" required>
+						<br>
+						Invites<br>
+						<input id="invitedUsers" size="35" type="text" value="" ng-model="hangoutForm.invited" placeholder="Separate each username with a space." required>
+						<br>
+						<br>
+						<input class="btn btn-info btn-sm" type="submit" value="Submit">
+					</form>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="newHangout" class="btn btn-default" data-dismiss="modal">I'm not ready, take me to my dashboard.</button>
+			</div>
 		</div>
+
 	</div>
+</div>
 
 </div>
 
 <br><br><br>
-<div ng-controller="logoutController">
+<div class="left" ng-controller="logoutController">
 	<a ng-click='logout()' class="btn btn-default">Logout</a>
 </div>

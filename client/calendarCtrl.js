@@ -10,8 +10,8 @@ function($routeParams, $scope, $http, moment){
 			method: 'GET',
 			params: request
 			}).then(function(response){
-				// console.log(response.data);
-				
+				console.log(response.data);
+				$scope.hangoutTitle = response.data[0].hangout;
 
 				var startDate = moment(response.data[0].startDate);
 				var endDate = moment(response.data[0].endDate);
@@ -92,15 +92,8 @@ function($routeParams, $scope, $http, moment){
 		});
 		
 	};
-//on click of availability button, toggles date true or false, if true it means available,
-//and i push that specific date in to the array
-//on click of save button, save this entire object with this list of dates.
 
-//use ng model
+	
+	
 }]);
 
-// need to add the user in the backend, save the schedule correctly
-// and let the client user know that the save worked
-//create a get endpoint to display a user's availability
-
-//i broke it. if i remove 
