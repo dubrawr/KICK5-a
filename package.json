@@ -4,6 +4,10 @@
     "start": "node server/server.js",
     "mongodb": "mongod --dbpath=mongo_data/ --nojournal"
   },
+  "engines": {
+    "node": "6.2.2",
+    "npm": "3.9.5"
+  },
   "dependencies": {
     "angular-moment": "^1.0.0",
     "bcrypt-nodejs": "0.0.3",
